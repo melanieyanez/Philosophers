@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/myanez-p/cursus_42/Rank03/Philosophers",
+      "program": "/Users/myanez-p/cursus_42/Rank03/Philosophers/build/Debug/outDebug"
+    }
+  ]
+}
