@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:05:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/10/29 19:06:52 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:54:15 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	init_args(t_args *args)
 {
-	args->nb_philos = 0;
-	args->time_to_die = 0;
-	args->time_to_eat = 0;
-	args->time_to_sleep = 0;
-	args->nb_meals = 0;
+	args->nb_philos = -1;
+	args->time_to_die = -1;
+	args->time_to_eat = -1;
+	args->time_to_sleep = -1;
+	args->nb_meals = INT_MAX;
 }
