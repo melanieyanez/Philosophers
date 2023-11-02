@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+         #
+#    By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 16:18:40 by melanieyane       #+#    #+#              #
-#    Updated: 2023/10/30 17:21:48 by melanieyane      ###   ########.fr        #
+#    Updated: 2023/11/02 16:47:57 by myanez-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ HEADERS = ${HDRDIR}
 # Compilation
 
 CC = GCC
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 # Commandes
 
