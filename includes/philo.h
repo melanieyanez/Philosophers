@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/10/30 17:21:00 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/10/31 18:27:16 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ typedef struct s_args
 	int		time_to_sleep;
 	int		nb_meals;
 }t_args;
+
+typedef struct s_philo
+{
+	int			id;
+	int			init_time;
+	pthread_t	thread;
+	int			meal_time;
+	int			meal_count;
+	t_args		*args;
+}t_philo;
 
 /*_____________ Functions _______________________*/
 
