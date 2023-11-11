@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/08 15:10:24 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 13:24:10 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,38 @@
 
 typedef struct s_args
 {
-	int		nb_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		nb_meals;
+	int				nb_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nb_meals;
+	int				stop;
+	pthread_mutex_t	stop_mutex;
 }t_args;
 
+typedef enum s_status
+{
+	THINKING,
+	EATING,
+	SLEEPING,
+	DEAD,
+}t_status;
+
+//reflechir si init time est necessaire ou si mealtime suffit
+// ajouter un stop flag quand il a mangé assez
+// et un autre goal flag dans args pour finir la simu
 typedef struct s_philo
 {
 	int					id;
 	long long			init_time;
-	int					is_dead;
 	pthread_t			thread;
 	int					meal_time;
 	int					meal_count;
+	int					goal;
+	int					fork_disp;
+	int					fork_nbr;
+	pthread_mutex_t		fork_mutex;
+	t_status			status;
 	t_args				*args;
 }t_philo;
 
@@ -50,24 +67,24 @@ void		*eating_process(t_philo *philo);
 void		*sleeping_process(t_philo *philo);
 void		*thinking_process(t_philo *philo);
 
+//init.c
+
+void		thread_init(t_philo **philo, t_args *args);
+void		philo_init(t_philo **philo, t_args *args);
+
 //main.c
 
 void		parse_args(int argc, char **argv, t_args *args);
-
-//init.c
-
-long long	get_time(void);
-void		philo_init(t_philo **philo, t_args *args);
-
-//ft_atoi.c
-
-int			ft_atoi(const char *str);
 
 //process.c
 
 void		*death_check(t_philo **philo, t_args *args);
 void		*philo_routine(void *philo);
-void		philo_create(t_philo **philo, t_args *args);
 void		philo_process(t_philo **philo, t_args *args);
+
+//tools.c
+
+long long	get_time(void);
+int			ft_atoi(const char *str);
 
 #endif

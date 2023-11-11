@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:46:54 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/08 15:04:30 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 11:37:34 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	parse_args(int argc, char **argv, t_args *args)
 	if (argc == 6)
 		args->nb_meals = ft_atoi(argv[5]);
 	else
-		args->nb_meals = INT_MAX;
-	if (args->nb_philos < 0 || args->time_to_die < 0 || args->time_to_eat < 0 || args->time_to_sleep < 0 || args->nb_meals <= 0)
+		args->nb_meals = -1;
+	if (args->nb_philos < 0 || args->time_to_die < 0 || args->time_to_eat < 0
+		|| args->time_to_sleep < 0 || args->nb_meals <= 0)
 	{
 		printf("Error: invalid arguments\n");
 		exit(1);
@@ -49,7 +50,6 @@ int	main(int argc, char **argv)
 	while (i < args->nb_philos)
 	{
 		philo[i] = malloc(sizeof(t_philo));
-		philo[i]->id = i;
 		i ++;
 	}
 	philo_process(philo, args);

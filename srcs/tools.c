@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 14:10:13 by melanieyane       #+#    #+#             */
-/*   Updated: 2023/10/30 17:19:32 by melanieyane      ###   ########.fr       */
+/*   Created: 2023/11/11 11:31:08 by melanieyane       #+#    #+#             */
+/*   Updated: 2023/11/11 11:31:51 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - */
+#include "../includes/philo.h"
 
-/* Fonction qui convertit une chaîne de caractères en entier */
+long long	get_time(void)
+{
+	struct timeval	current_time;
+
+	gettimeofday(&current_time, NULL);
+	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+}
 
 int	ft_atoi(const char *str)
 {

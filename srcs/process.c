@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:47 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/08 15:56:12 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 13:21:05 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,45 +33,29 @@ void	*death_check(t_philo **philo, t_args *args)
 	}
 }
 
-void	*philo_routine(void *philo)
+void	*philo_routine(void *p)
 {
-	//printf("philo %d started\n", ((t_philo *) philo)->id + 1);
-	while (((t_philo *) philo)->meal_count < ((t_philo *) philo)->args->nb_meals)
+	t_philo	*philo;
+
+	philo = (t_philo *)p;
+	while (!philo->args->stop)
 	{
-		eating_process((t_philo *) philo);
-		sleeping_process((t_philo *) philo);
+		while (philo->meal_count < philo->args->nb_meals)
+		{
+			//death_check()
+			eating_process(philo);
+			sleeping_process(philo);
+		}
 	}
 	return (NULL);
 }
 
-// penser a init 0 et 2 et 4 en meme temps
-// puis a init 1 et 3 et 5 etc.
-// sleep necessaire?
+//(i + 1)%nbr
 
-void	philo_create(t_philo **philo, t_args *args)
-{
-	int	i;
-
-	i = 0;
-	while (i < args->nb_philos)
-	{
-		//printf("philo %d created\n", i + 1);
-		pthread_create(&(philo[i]->thread), NULL, philo_routine, (philo[i]));
-		i ++;
-	}
-}
+// checker si on a besoin pour un seul philo
 
 void	philo_process(t_philo **philo, t_args *args)
 {
-	int	i;
-
+	pthread_mutex_init(&args->stop_mutex, NULL);
 	philo_init(philo, args);
-	philo_create(philo, args);
-	death_check(philo, args);
-	i = 0;
-	while (i < args->nb_philos)
-	{
-		pthread_join(philo[i]->thread, NULL);
-		i ++;
-	}
 }

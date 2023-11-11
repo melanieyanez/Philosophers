@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:05:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/08 14:35:54 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/11 13:13:54 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-long long	get_time(void)
+void	thread_init(t_philo **philo, t_args *args)
 {
-	struct timeval	current_time;
+	int	i;
 
-	gettimeofday(&current_time, NULL);
-	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+	i = 0;
+	while (i < args->nb_philos)
+	{
+		if (i % 2)
+			usleep(5000);
+		pthread_create(&(philo[i]->thread), NULL, philo_routine, (philo[i]));
+		i ++;
+	}
 }
 
 void	philo_init(t_philo **philo, t_args *args)
@@ -27,9 +33,17 @@ void	philo_init(t_philo **philo, t_args *args)
 	i = 0;
 	while (i < args->nb_philos)
 	{
+		philo[i]->id = i;
 		philo[i]->init_time = get_time();
-		philo[i]->is_dead = 0;
+		philo[i]->meal_time = get_time();
+		philo[i]->meal_count = 0;
+		philo[i]->goal = 0;
+		philo[i]->fork_disp = 1;
+		philo[i]->fork_nbr = 0;
+		pthread_mutex_init(&(philo[i]->fork_mutex), NULL);
+		philo[i]->status = THINKING;
 		philo[i]->args = args;
 		i ++;
 	}
+	thread_init(philo, args);
 }
