@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:05:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/12 10:56:38 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 20:34:43 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	thread_init(t_philo **philo, t_args *args)
 	i = 0;
 	while (i < args->nb_philos)
 	{
-		if (i % 2)
-			usleep(5000);
+		//if (i % 2)
+			//usleep(5000);
 		pthread_create(&(philo[i]->thread), NULL, philo_routine, (philo[i]));
 		i ++;
 	}

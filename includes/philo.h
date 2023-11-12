@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/12 10:55:20 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 20:23:31 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ typedef enum s_status
 	DEAD,
 }t_status;
 
-//reflechir si init time est necessaire ou si mealtime suffit
-// ajouter un stop flag quand il a mangé assez
-// et un autre goal flag dans args pour finir la simu
 typedef struct s_philo
 {
 	int					id;
@@ -79,13 +76,13 @@ void		parse_args(int argc, char **argv, t_args *args);
 
 //process.c
 
-void		*death_check(t_philo **philo, t_args *args);
+void		death_check(t_philo *philo);
 void		*philo_routine(void *philo);
 void		philo_process(t_philo **philo, t_args *args);
 
 //tools.c
 
-long long	get_time(void);
+int	get_time(void);
 int			ft_atoi(const char *str);
 
 #endif

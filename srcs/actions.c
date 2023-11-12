@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:57 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/12 11:49:31 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 20:02:22 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	eating_process(t_philo *philo)
 		return ;
 	printf("philo %d is eating\n", philo->id + 1);
 	//while (!philo->args->stop && )
-		//death_check();
+		//death_check(philo);
 	philo->args->nb_meals += 1;
 	philo->meal_time = get_time() - philo->init_time;
 	leave_forks(philo);
@@ -44,7 +44,7 @@ void	sleeping_process(t_philo *philo)
 		return ;
 	printf("philo %d is sleeping\n", philo->id + 1);
 	//while ()
-	//	death_check();
+	//	death_check(philo);
 	philo->status = THINKING;
 }
 
@@ -77,7 +77,7 @@ void	thinking_process(t_philo *philo)
 	printf("philo %d is thinking\n", philo->id + 1);
 	while (!philo->args->stop && philo->fork_nbr < 2)
 	{
-		//death_check();
+		//death_check(philo);
 		take_forks(philo);
 	}
 	philo->status = EATING;

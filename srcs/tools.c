@@ -6,18 +6,21 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:31:08 by melanieyane       #+#    #+#             */
-/*   Updated: 2023/11/11 11:31:51 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 20:27:12 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-long long	get_time(void)
+int	get_time(void)
 {
 	struct timeval	current_time;
+	static int		t = 0;
 
 	gettimeofday(&current_time, NULL);
-	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
+	if (t == 0)
+		t = current_time.tv_sec;
+	return (((current_time.tv_sec - t) * 1000) + (current_time.tv_usec / 1000));
 }
 
 int	ft_atoi(const char *str)

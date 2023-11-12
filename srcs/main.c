@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:46:54 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/11 11:37:34 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 19:51:11 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	parse_args(int argc, char **argv, t_args *args)
 {
+	args->stop = 0;
 	args->nb_philos = ft_atoi(argv[1]);
 	args->time_to_die = ft_atoi(argv[2]);
 	args->time_to_eat = ft_atoi(argv[3]);
@@ -21,7 +22,7 @@ void	parse_args(int argc, char **argv, t_args *args)
 	if (argc == 6)
 		args->nb_meals = ft_atoi(argv[5]);
 	else
-		args->nb_meals = -1;
+		args->nb_meals = INT_MAX;
 	if (args->nb_philos < 0 || args->time_to_die < 0 || args->time_to_eat < 0
 		|| args->time_to_sleep < 0 || args->nb_meals <= 0)
 	{
