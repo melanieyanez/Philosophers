@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:05:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/11 13:13:54 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 10:56:38 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	philo_init(t_philo **philo, t_args *args)
 		philo[i]->fork_disp = 1;
 		philo[i]->fork_nbr = 0;
 		pthread_mutex_init(&(philo[i]->fork_mutex), NULL);
+		philo[i]->next_philo = philo[(i + 1) % args->nb_philos];
 		philo[i]->status = THINKING;
 		philo[i]->args = args;
 		i ++;

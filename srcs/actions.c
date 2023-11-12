@@ -3,41 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:57 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/08 15:55:45 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/12 11:49:31 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-//on cree le philo
-//si il peut manger, il mange
-//si il peut pas manger, il pense
-//une fois qu'il a mangé, il dort
-//et rebolotte
-
-void	*eating_process(t_philo *philo)
+void	leave_forks(t_philo *philo)
 {
+	if (philo->args->stop)
+		return ;
+	pthread_mutex_lock(&(philo->fork_mutex));
+	philo->fork_disp = 1;
+	pthread_mutex_unlock(&(philo->fork_mutex));
+	pthread_mutex_lock(&(philo->next_philo->fork_mutex));
+	philo->next_philo->fork_disp = 1;
+	pthread_mutex_unlock(&(philo->next_philo->fork_mutex));
+	philo->fork_nbr = 0;
+}
+
+void	eating_process(t_philo *philo)
+{
+	if (philo->args->stop)
+		return ;
 	printf("philo %d is eating\n", philo->id + 1);
-	//usleep(philo->args->time_to_eat * 1000);
-	//printf("philo %d is done eating\n", philo->id + 1);
+	//while (!philo->args->stop && )
+		//death_check();
 	philo->args->nb_meals += 1;
 	philo->meal_time = get_time() - philo->init_time;
-	return (NULL);
+	leave_forks(philo);
+	philo->status = SLEEPING;
 }
 
-void	*sleeping_process(t_philo *philo)
+void	sleeping_process(t_philo *philo)
 {
+	if (philo->args->stop)
+		return ;
 	printf("philo %d is sleeping\n", philo->id + 1);
-	//usleep(philo->args->time_to_sleep * 1000);
-	//printf("philo %d is done sleeping\n", philo->id + 1);
-	return (NULL);
+	//while ()
+	//	death_check();
+	philo->status = THINKING;
 }
 
-void	*thinking_process(t_philo *philo)
+void	take_forks(t_philo *philo)
 {
-	(void) philo;
-	return (NULL);
+	if (philo->args->stop)
+		return ;
+	pthread_mutex_lock(&(philo->fork_mutex));
+	if (philo->fork_disp)
+	{
+		printf("philo %d has taken a fork\n", philo->id + 1);
+		philo->fork_disp = 0;
+		philo->fork_nbr += 1;
+	}
+	pthread_mutex_unlock(&(philo->fork_mutex));
+	pthread_mutex_lock(&(philo->next_philo->fork_mutex));
+	if (philo->next_philo->fork_disp)
+	{
+		printf("philo %d has taken a fork\n", philo->id + 1);
+		philo->next_philo->fork_disp = 0;
+		philo->fork_nbr += 1;
+	}
+	pthread_mutex_unlock(&(philo->next_philo->fork_mutex));
+}
+
+void	thinking_process(t_philo *philo)
+{
+	if (philo->args->stop)
+		return ;
+	printf("philo %d is thinking\n", philo->id + 1);
+	while (!philo->args->stop && philo->fork_nbr < 2)
+	{
+		//death_check();
+		take_forks(philo);
+	}
+	philo->status = EATING;
 }

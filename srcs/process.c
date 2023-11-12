@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:47 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/11 13:21:05 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 11:49:57 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,22 @@ void	*philo_routine(void *p)
 		while (philo->meal_count < philo->args->nb_meals)
 		{
 			//death_check()
-			eating_process(philo);
-			sleeping_process(philo);
+			if (philo->status == THINKING)
+			{
+				thinking_process(philo);
+			}
+			else if (philo->status == EATING)
+			{
+				eating_process(philo);
+			}
+			else if (philo->status == SLEEPING)
+			{
+				sleeping_process(philo);
+			}
 		}
 	}
 	return (NULL);
 }
-
-//(i + 1)%nbr
-
 // checker si on a besoin pour un seul philo
 
 void	philo_process(t_philo **philo, t_args *args)

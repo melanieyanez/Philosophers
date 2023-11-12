@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/11 13:24:10 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/12 10:55:20 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_philo
 	int					fork_disp;
 	int					fork_nbr;
 	pthread_mutex_t		fork_mutex;
+	struct s_philo		*next_philo;
 	t_status			status;
 	t_args				*args;
 }t_philo;
@@ -63,9 +64,9 @@ typedef struct s_philo
 
 //actions.c
 
-void		*eating_process(t_philo *philo);
-void		*sleeping_process(t_philo *philo);
-void		*thinking_process(t_philo *philo);
+void		eating_process(t_philo *philo);
+void		sleeping_process(t_philo *philo);
+void		thinking_process(t_philo *philo);
 
 //init.c
 
