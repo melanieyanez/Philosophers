@@ -6,7 +6,7 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/12 20:23:31 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/13 20:52:29 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void		philo_process(t_philo **philo, t_args *args);
 
 //tools.c
 
-int	get_time(void);
+void		print_actions(int time, char *action, t_philo *philo);
+int			get_time(void);
 int			ft_atoi(const char *str);
 
 #endif

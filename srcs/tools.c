@@ -6,11 +6,19 @@
 /*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:31:08 by melanieyane       #+#    #+#             */
-/*   Updated: 2023/11/12 20:27:12 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/13 21:00:05 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	print_actions(int time, char *action, t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->args->stop_mutex));
+	if (!philo->args->stop)
+		printf("%dms Philo %d %s\n", time, philo->id + 1, action);
+	pthread_mutex_unlock(&(philo->args->stop_mutex));
+}
 
 int	get_time(void)
 {
