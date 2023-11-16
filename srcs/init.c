@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:05:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/13 21:07:33 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/16 14:51:35 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	philo_init(t_philo **philo, t_args *args)
 		philo[i]->init_time = get_time();
 		philo[i]->meal_time = get_time();
 		philo[i]->meal_count = 0;
-		philo[i]->goal = 0;
 		philo[i]->fork_disp = 1;
 		philo[i]->fork_nbr = 0;
 		pthread_mutex_init(&(philo[i]->fork_mutex), NULL);

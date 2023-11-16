@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:31:08 by melanieyane       #+#    #+#             */
-/*   Updated: 2023/11/13 21:00:05 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/16 15:14:15 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	better_sleep(int duration, t_philo *philo)
+{
+	int	current_time;
+
+	current_time = get_time();
+	while (get_time() - current_time <= duration)
+	{
+		pthread_mutex_lock(&(philo->args->stop_mutex));
+		if (philo->args->stop)
+		{
+			pthread_mutex_unlock(&(philo->args->stop_mutex));
+			return ;
+		}
+		pthread_mutex_unlock(&philo->args->stop_mutex);
+		if ((get_time() - current_time) >= duration)
+			return ;
+	}
+}
 
 void	print_actions(int time, char *action, t_philo *philo)
 {
@@ -23,12 +42,9 @@ void	print_actions(int time, char *action, t_philo *philo)
 int	get_time(void)
 {
 	struct timeval	current_time;
-	static int		t = 0;
 
 	gettimeofday(&current_time, NULL);
-	if (t == 0)
-		t = current_time.tv_sec;
-	return (((current_time.tv_sec - t) * 1000) + (current_time.tv_usec / 1000));
+	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
 }
 
 int	ft_atoi(const char *str)

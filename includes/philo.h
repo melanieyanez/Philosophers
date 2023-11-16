@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/13 20:52:29 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/16 16:26:48 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef enum s_status
 	THINKING,
 	EATING,
 	SLEEPING,
+	DONE,
 	DEAD,
 }t_status;
 
@@ -48,7 +49,6 @@ typedef struct s_philo
 	pthread_t			thread;
 	int					meal_time;
 	int					meal_count;
-	int					goal;
 	int					fork_disp;
 	int					fork_nbr;
 	pthread_mutex_t		fork_mutex;
@@ -76,12 +76,13 @@ void		parse_args(int argc, char **argv, t_args *args);
 
 //process.c
 
-void		death_check(t_philo *philo);
+int			death_check(t_philo **philo);
 void		*philo_routine(void *philo);
 void		philo_process(t_philo **philo, t_args *args);
 
 //tools.c
 
+void		better_sleep(int duration, t_philo *philo);
 void		print_actions(int time, char *action, t_philo *philo);
 int			get_time(void);
 int			ft_atoi(const char *str);
