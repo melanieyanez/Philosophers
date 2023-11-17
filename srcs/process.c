@@ -6,59 +6,53 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:47 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/16 16:37:50 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:45:13 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //TO DO
 //un seul philo
-//ameliorer end_check pour quitter quand ils ont tous assez mangé
 //remplacer les exit par des return qui quitte le programme
 //faire une fonction qui free tout
-//attention! quand ils ont tous mangé, ca continue quand meme
+//ajouter protection malloc
 
 #include "../includes/philo.h"
 
-int	end_check(t_philo **philo)
+int	end_check(t_philo **philo, t_args *args)
 {
 	int	i;
+	int	all_done;
 
 	i = 0;
-	while (42)
+	all_done = 0;
+	while (i < args->nb_philos)
 	{
-		if (i == philo[i]->args->nb_philos - 1)
-		{
-			if (philo[i]->status != DONE)
-				i = 0;
-			else
-			{
-				pthread_mutex_lock(&(philo[i]->args->stop_mutex));
-				philo[i]->args->stop = 1;
-				pthread_mutex_unlock(&(philo[i]->args->stop_mutex));
-				return (1);
-			}
-		}
+		if (philo[i]->status == DONE)
+			all_done ++;
 		i ++;
 	}
+	if (all_done == args->nb_philos)
+		return (1);
+	return (0);
 }
 
-int	death_check(t_philo **philo)
+void	death_check(t_philo **philo, t_args *args)
 {
 	int	i;
 
 	i = 0;
-	while (42)
+	while (!end_check(philo, args))
 	{
 		if (i == philo[i]->args->nb_philos - 1)
 			i = 0;
 		if (get_time() - philo[i]->meal_time > philo[i]->args->time_to_die)
-		{
+		{	
 			philo[i]->status = DEAD;
 			print_actions(get_time() - philo[i]->init_time, "is dead", philo[i]);
 			pthread_mutex_lock(&(philo[i]->args->stop_mutex));
 			philo[i]->args->stop = 1;
 			pthread_mutex_unlock(&(philo[i]->args->stop_mutex));
-			return (1);
+			break ;
 		}
 		i ++;
 	}
@@ -69,22 +63,19 @@ void	*philo_routine(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	while (!philo->args->stop)
+	while (!philo->args->stop && philo->status != DONE)
 	{
-		while (philo->meal_count <= philo->args->nb_meals  && !philo->args->stop)
+		if (philo->status == THINKING)
 		{
-			if (philo->status == THINKING && !philo->args->stop)
-			{
-				thinking_process(philo);
-			}
-			else if (philo->status == EATING && !philo->args->stop)
-			{
-				eating_process(philo);
-			}
-			else if (philo->status == SLEEPING && !philo->args->stop)
-			{
-				sleeping_process(philo);
-			}
+			thinking_process(philo);
+		}
+		else if (philo->status == EATING)
+		{
+			eating_process(philo);
+		}
+		else if (philo->status == SLEEPING)
+		{
+			sleeping_process(philo);
 		}
 	}
 	return (NULL);
@@ -94,12 +85,16 @@ void	*philo_routine(void *p)
 
 void	philo_process(t_philo **philo, t_args *args)
 {
+	int	i;
+
 	pthread_mutex_init(&args->stop_mutex, NULL);
 	philo_init(philo, args);
-	//if (death_check(philo))
-		//exit(0);
-	if (end_check(philo))
-		exit (0);
-	//if (end_check(philo) || death_check(philo))
-		//exit(0) ;
+	death_check(philo, args);
+	i = 0;
+	while (i < args->nb_philos)
+	{
+		pthread_join(philo[i]->thread, NULL);
+		i ++;
+	}
+	quit_program(philo, args);
 }

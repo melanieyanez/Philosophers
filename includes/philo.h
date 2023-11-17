@@ -6,7 +6,7 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/16 16:26:48 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:41:59 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_philo
 	int					id;
 	long long			init_time;
 	pthread_t			thread;
-	int					meal_time;
+	long long			meal_time;
 	int					meal_count;
 	int					fork_disp;
 	int					fork_nbr;
@@ -72,11 +72,11 @@ void		philo_init(t_philo **philo, t_args *args);
 
 //main.c
 
+void		quit_program(t_philo **philo, t_args *args);
 void		parse_args(int argc, char **argv, t_args *args);
 
 //process.c
 
-int			death_check(t_philo **philo);
 void		*philo_routine(void *philo);
 void		philo_process(t_philo **philo, t_args *args);
 
@@ -84,7 +84,7 @@ void		philo_process(t_philo **philo, t_args *args);
 
 void		better_sleep(int duration, t_philo *philo);
 void		print_actions(int time, char *action, t_philo *philo);
-int			get_time(void);
+long long	get_time(void);
 int			ft_atoi(const char *str);
 
 #endif

@@ -6,11 +6,13 @@
 /*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:05:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/16 14:51:35 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/17 17:33:03 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+//attention des fois philo 2 mange avant philo 5
 
 void	thread_init(t_philo **philo, t_args *args)
 {
@@ -19,10 +21,17 @@ void	thread_init(t_philo **philo, t_args *args)
 	i = 0;
 	while (i < args->nb_philos)
 	{
-		if (i % 2)
-			usleep(5000);
 		pthread_create(&(philo[i]->thread), NULL, philo_routine, (philo[i]));
-		i ++;
+		i += 2;
+		//usleep(500);
+	}
+	usleep(5000);
+	i = 1;
+	while (i < args->nb_philos)
+	{
+		pthread_create(&(philo[i]->thread), NULL, philo_routine, (philo[i]));
+		i += 2;
+		//usleep(500);
 	}
 }
 

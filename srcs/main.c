@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
+/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:46:54 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/12 19:51:11 by melanieyane      ###   ########.fr       */
+/*   Updated: 2023/11/17 17:51:25 by myanez-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+//attention a remplacer le exit par autre chose
+
+void	quit_program(t_philo **philo, t_args *args)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&(args->stop_mutex));
+	while (i < args->nb_philos)
+	{
+		pthread_mutex_destroy(&(philo[i]->fork_mutex));
+		free(philo[i]);
+		i ++;
+	}
+	free(args);
+	free(philo);
+}
 
 void	parse_args(int argc, char **argv, t_args *args)
 {
