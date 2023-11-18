@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:31:08 by melanieyane       #+#    #+#             */
-/*   Updated: 2023/11/17 14:41:57 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:16:29 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/*
+void	error_message()
+{
+	
+}
+*/
 
 void	better_sleep(int duration, t_philo *philo)
 {
@@ -19,8 +26,13 @@ void	better_sleep(int duration, t_philo *philo)
 	current_time = get_time();
 	while (get_time() - current_time <= duration)
 	{
+		pthread_mutex_lock(&(philo->args->stop_mutex));
 		if (philo->args->stop)
+		{
+			pthread_mutex_unlock(&(philo->args->stop_mutex));
 			return ;
+		}
+		pthread_mutex_unlock(&(philo->args->stop_mutex));
 		if ((get_time() - current_time) >= duration)
 			return ;
 	}

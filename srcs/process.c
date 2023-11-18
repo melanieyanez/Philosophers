@@ -3,18 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:47 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/17 17:45:13 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:20:21 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//TO DO
-//un seul philo
-//remplacer les exit par des return qui quitte le programme
-//faire une fonction qui free tout
-//ajouter protection malloc
 
 #include "../includes/philo.h"
 
@@ -81,7 +75,15 @@ void	*philo_routine(void *p)
 	return (NULL);
 }
 
-// checker si on a besoin pour un seul philo
+void	one_philo(t_philo **philo)
+{
+	pthread_mutex_lock(&(philo[0]->fork_mutex));
+	print_actions(get_time() - philo[0]->init_time, "is thinking", philo[0]);
+	print_actions(get_time() - philo[0]->init_time, "has taken a fork", philo[0]);
+	better_sleep(philo[0]->args->time_to_die, philo[0]);
+	print_actions(get_time() - philo[0]->init_time, "is dead", philo[0]);
+	pthread_mutex_unlock(&(philo[0]->fork_mutex));
+}
 
 void	philo_process(t_philo **philo, t_args *args)
 {
@@ -89,12 +91,18 @@ void	philo_process(t_philo **philo, t_args *args)
 
 	pthread_mutex_init(&args->stop_mutex, NULL);
 	philo_init(philo, args);
-	death_check(philo, args);
-	i = 0;
-	while (i < args->nb_philos)
+	if (args->nb_philos == 1)
+		one_philo(philo);
+	else
 	{
-		pthread_join(philo[i]->thread, NULL);
-		i ++;
+		thread_init(philo, args);
+		death_check(philo, args);
+		i = 0;
+		while (i < args->nb_philos)
+		{
+			pthread_join(philo[i]->thread, NULL);
+			i ++;
+		}
 	}
 	quit_program(philo, args);
 }

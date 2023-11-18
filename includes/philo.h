@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/17 17:41:59 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:24:22 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ typedef struct s_philo
 
 //actions.c
 
+void		leave_forks(t_philo *philo);
 void		eating_process(t_philo *philo);
 void		sleeping_process(t_philo *philo);
+void		take_forks(t_philo *philo);
 void		thinking_process(t_philo *philo);
 
 //init.c
@@ -77,7 +79,10 @@ void		parse_args(int argc, char **argv, t_args *args);
 
 //process.c
 
+int			end_check(t_philo **philo, t_args *args);
+void		death_check(t_philo **philo, t_args *args);
 void		*philo_routine(void *philo);
+void		one_philo(t_philo **philo);
 void		philo_process(t_philo **philo, t_args *args);
 
 //tools.c

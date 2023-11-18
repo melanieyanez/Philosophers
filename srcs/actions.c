@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:57 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/17 15:40:57 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/18 17:40:47 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	eating_process(t_philo *philo)
 	print_actions(get_time() - philo->init_time, "is eating", philo);
 	better_sleep(philo->args->time_to_eat, philo);
 	philo->meal_count += 1;
+	leave_forks(philo);
 	if (philo->args->nb_meals == philo->meal_count)
 		philo->status = DONE;
-	leave_forks(philo);
 	if (philo->status != DONE)
 		philo->status = SLEEPING;
 }

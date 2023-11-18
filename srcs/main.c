@@ -3,31 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 14:46:54 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/17 17:51:25 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/18 18:26:23 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+//TO DO
+//nbr de lignes du main
+//custom les return avec error_message et/ou quit_program
+//si on garde error_message, ajouter au header
+//s'assurer qu'il y a plus de exit
+//MEAL MAX à -1 ?
 
-//attention a remplacer le exit par autre chose
+#include "../includes/philo.h"
 
 void	quit_program(t_philo **philo, t_args *args)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_destroy(&(args->stop_mutex));
 	while (i < args->nb_philos)
 	{
-		pthread_mutex_destroy(&(philo[i]->fork_mutex));
-		free(philo[i]);
+		if (philo[i])
+		{
+			pthread_mutex_destroy(&(philo[i]->fork_mutex));
+			free(philo[i]);
+		}
 		i ++;
 	}
-	free(args);
-	free(philo);
+	if (args)
+	{
+		pthread_mutex_destroy(&(args->stop_mutex));
+		free(args);
+	}
+	if (philo)
+		free(philo);
 }
 
 void	parse_args(int argc, char **argv, t_args *args)
@@ -56,19 +68,24 @@ int	main(int argc, char **argv)
 	int		i;
 
 	args = malloc(sizeof(t_args));
+	if (!args)
+		return (1);
 	if (argc == 5 || argc == 6)
 		parse_args(argc, argv, args);
 	else
 	{
 		printf("Usage: ./philo <nb_philos> <time_to_die> <time_to_eat> <time_to_sleep> <nb_meals>\n");
-		free(args);
 		return (1);
 	}
 	philo = malloc(sizeof(t_philo) * args->nb_philos);
+	if (!philo)
+		return (1);
 	i = 0;
 	while (i < args->nb_philos)
 	{
 		philo[i] = malloc(sizeof(t_philo));
+		if (!philo[i])
+			return (1);
 		i ++;
 	}
 	philo_process(philo, args);
