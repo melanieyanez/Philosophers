@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:31:08 by melanieyane       #+#    #+#             */
-/*   Updated: 2023/11/22 16:48:44 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:50:31 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/*----------------------------------------------*/
+/* Waits for a specified duration */
+/* while periodically checking if the program should stop. */
 
 void	better_sleep(int duration, t_philo *philo)
 {
@@ -31,6 +35,9 @@ void	better_sleep(int duration, t_philo *philo)
 	}
 }
 
+/*----------------------------------------------*/
+/* Prints a philosopher's action with the time elapsed since the start */
+
 void	print_actions(int time, char *action, t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->args->write_mutex));
@@ -41,6 +48,9 @@ void	print_actions(int time, char *action, t_philo *philo)
 	pthread_mutex_unlock(&(philo->args->stop_mutex));
 }
 
+/*----------------------------------------------*/
+/*  Returns the current time in milliseconds. */
+
 long long	get_time(void)
 {
 	struct timeval	current_time;
@@ -48,6 +58,9 @@ long long	get_time(void)
 	gettimeofday(&current_time, NULL);
 	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
 }
+
+/*----------------------------------------------*/
+/*  Converts a string to an integer. */
 
 int	ft_atoi(const char *str)
 {

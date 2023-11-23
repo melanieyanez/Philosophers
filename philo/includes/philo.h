@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:46:12 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/22 16:37:54 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:32:40 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ void		philo_init(t_philo **philo, t_args *args);
 
 //main.c
 
+int			error_return(char *message, t_philo **philo, t_args *args);
 void		quit_program(t_philo **philo, t_args *args);
-int			parse_args(int argc, char **argv, t_args *args);
+int			parse_args(int argc, char **argv, t_philo **philo, t_args *args);
 
 //process.c
 

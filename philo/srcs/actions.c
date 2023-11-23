@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:57 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/22 15:50:28 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:56:32 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/*----------------------------------------------*/
+/*  Releases the forks of the current philosopher and his neighbor. */
 
 void	leave_forks(t_philo *philo)
 {
@@ -30,6 +33,10 @@ void	leave_forks(t_philo *philo)
 	pthread_mutex_unlock(&(philo->next_philo->fork_mutex));
 	philo->fork_nbr = 0;
 }
+
+/*----------------------------------------------*/
+/* Eating process for the philosopher, */
+/* including waiting, printing, and fork release. */
 
 void	eating_process(t_philo *philo)
 {
@@ -55,6 +62,10 @@ void	eating_process(t_philo *philo)
 	pthread_mutex_unlock(&(philo->status_mutex));
 }
 
+/*----------------------------------------------*/
+/* Sleeping process for the philosopher, */
+/* including printing and waiting for a specified duration. */
+
 void	sleeping_process(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->args->stop_mutex));
@@ -70,6 +81,9 @@ void	sleeping_process(t_philo *philo)
 	philo->status = THINKING;
 	pthread_mutex_unlock(&(philo->status_mutex));
 }
+
+/*----------------------------------------------*/
+/* Takes available forks for the current philosopher. */
 
 void	take_forks(t_philo *philo)
 {
@@ -97,6 +111,10 @@ void	take_forks(t_philo *philo)
 	}
 	pthread_mutex_unlock(&(philo->next_philo->fork_mutex));
 }
+
+/*----------------------------------------------*/
+/* Thinking process for the philosopher, */
+/* including printing and acquiring the necessary forks.*/
 
 void	thinking_process(t_philo *philo)
 {

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+         #
+#    By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/30 16:18:40 by melanieyane       #+#    #+#              #
-#    Updated: 2023/11/22 17:18:13 by myanez-p         ###   ########.fr        #
+#    Updated: 2023/11/23 11:38:01 by melanieyane      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ HEADERS = ${HDRDIR}
 # Compilation
 
 CC = GCC
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -pthread -fsanitize=thread
 
 # Commandes
 

@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 19:05:45 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/22 13:17:27 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:01:00 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/*----------------------------------------------*/
+/* Initializes and launches threads for philosophers */
+/* with even and odd indices separately. */
 
 void	thread_init(t_philo **philo, t_args *args)
 {
@@ -30,6 +34,10 @@ void	thread_init(t_philo **philo, t_args *args)
 		i += 2;
 	}
 }
+
+/*----------------------------------------------*/
+/* Initializes data structures for each philosopher */
+/* with necessary parameters and mutexes. */
 
 void	philo_init(t_philo **philo, t_args *args)
 {

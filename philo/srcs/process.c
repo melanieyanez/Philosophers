@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myanez-p <myanez-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: melanieyanez <melanieyanez@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 13:32:47 by myanez-p          #+#    #+#             */
-/*   Updated: 2023/11/22 16:24:44 by myanez-p         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:59:24 by melanieyane      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+/*----------------------------------------------*/
+/* Checks if all philosophers have finished their meals. */
 
 int	end_check(t_philo **philo, t_args *args)
 {
@@ -31,6 +34,9 @@ int	end_check(t_philo **philo, t_args *args)
 		return (1);
 	return (0);
 }
+
+/*----------------------------------------------*/
+/* Checks if a philosopher has not eaten for too long, signaling their death. */
 
 void	death_check(t_philo **philo, t_args *args)
 {
@@ -58,6 +64,9 @@ void	death_check(t_philo **philo, t_args *args)
 		i ++;
 	}
 }
+
+/*----------------------------------------------*/
+/* Routine executed by each philosopher in a thread. */
 
 void	*philo_routine(void *p)
 {
@@ -88,6 +97,9 @@ void	*philo_routine(void *p)
 	return (NULL);
 }
 
+/*----------------------------------------------*/
+/*  Simulation for a single philosopher who dies right away. */
+
 void	one_philo(t_philo **philo)
 {
 	pthread_mutex_lock(&(philo[0]->fork_mutex));
@@ -98,6 +110,10 @@ void	one_philo(t_philo **philo)
 	print_actions(get_time() - philo[0]->init_time, "is dead", philo[0]);
 	pthread_mutex_unlock(&(philo[0]->fork_mutex));
 }
+
+/*----------------------------------------------*/
+/* Initializes mutexes and philosophers, launches threads, */
+/* performs death check, and waits for their termination. */
 
 void	philo_process(t_philo **philo, t_args *args)
 {
